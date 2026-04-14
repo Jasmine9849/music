@@ -1,179 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Web Title</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, sans-serif;
-        }
-        body {
-            background: #121212;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .player {
-            max-width: 380px;
-            width: 100%;
-            background: #1e1e1e;
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
-        }
-        .cover {
-            width: 260px;
-            height: 260px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 0 auto 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-        .cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-        .artist {
-            font-size: 15px;
-            color: #b3b3b3;
-            margin-bottom: 25px;
-        }
-        .progress {
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            cursor: pointer;
-            margin-bottom: 12px;
-        }
-        .bar {
-            height: 100%;
-            background: #1ed760;
-            border-radius: 3px;
-            width: 0%;
-        }
-        .time {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 30px;
-        }
-        .play-btn {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: none;
-            background: #1ed760;
-            color: #000;
-            font-size: 32px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .play-btn:active {
-            transform: scale(0.95);
-        }
-    </style>
+<meta charset="UTF-8">
+<title>月光奏鸣曲</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{
+background:#111;color:#fff;
+display:flex;flex-direction:column;align-items:center;
+justify-content:center;min-height:100vh;padding:30px;
+}
+.cover{width:280px;height:280px;border-radius:20px;box-shadow:0 0 30px #222}
+h2{font-weight:normal;margin-bottom:10px;font-size:18px}
+audio{width:100%;max-width:360px;margin-top:10px}
+</style>
 </head>
 <body>
-    <div class="player">
-        <div class="cover">
-            <img id="coverImg" src="https://picsum.photos/400/400">
-        </div>
-        <div class="title" id="songTitle">歌曲名称</div>
-        <div class="artist" id="songArtist">歌手</div>
+<h2>Gianluca Cascioli - 月光奏鸣曲</h2>
+< img class="cover" src="https://raw.githubusercontent.com/jasmine9849/music/main/mmexport1776161535780.jpg">
 
-        <div class="progress" id="progress">
-            <div class="bar" id="bar"></div>
-        </div>
-        <div class="time">
-            <span id="currentTime">00:00</span>
-            <span id="totalTime">00:00</span>
-        </div>
-
-        <button class="play-btn" id="playBtn">▶</button>
-    </div>
-
-    <audio id="audio" preload="metadata">
-
-    <script>
-        // ============ 这里改成你自己的信息 ============
-        const song = {
-            title: "歌曲名称",
-            artist: "歌手",
-            file: "music.mp3", // 你的MP3文件名
-            cover: "pic.jpg" // 封面图片，可替换为本地图片路径
-        };
-
-        // 初始化
-        const audio = document.getElementById("audio");
-        const playBtn = document.getElementById("playBtn");
-        const progress = document.getElementById("progress");
-        const bar = document.getElementById("bar");
-        const currentTimeEl = document.getElementById("currentTime");
-        const totalTimeEl = document.getElementById("totalTime");
-        let isPlaying = false;
-
-        // 加载歌曲
-        audio.src = song.file;
-        document.getElementById("songTitle").innerText = song.title;
-        document.getElementById("songArtist").innerText = song.artist;
-        document.getElementById("coverImg").src = song.cover;
-
-        // 播放/暂停
-        playBtn.addEventListener("click", () => {
-            if (isPlaying) {
-                audio.pause();
-                playBtn.innerText = "▶";
-            } else {
-                audio.play().catch(() => {});
-                playBtn.innerText = "⏸";
-            }
-            isPlaying = !isPlaying;
-        });
-
-        // 进度条更新
-        audio.addEventListener("timeupdate", () => {
-            if (!audio.duration) return;
-            const percent = (audio.currentTime / audio.duration) * 100;
-            bar.style.width = percent + "%";
-            currentTimeEl.innerText = formatTime(audio.currentTime);
-        });
-
-        // 总时长
-        audio.addEventListener("loadedmetadata", () => {
-            totalTimeEl.innerText = formatTime(audio.duration);
-        });
-
-        // 点击进度条跳转
-        progress.addEventListener("click", (e) => {
-            if (!audio.duration) return;
-            const rect = progress.getBoundingClientRect();
-            const percent = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = percent * audio.duration;
-        });
-
-        // 时间格式化
-        function formatTime(t) {
-            if (!t || isNaN(t)) return "00:00";
-            const m = Math.floor(t / 60).toString().padStart(2, "0");
-            const s = Math.floor(t % 60).toString().padStart(2, "0");
-            return `${m}:${s}`;
-        }
-    </script>
+<audio controls loop src="https://raw.githubusercontent.com/jasmine9849/music/main/Gianluca%20Cascioli%20-%20Piano%20Sonata%20No.14%20in%20C%20sharp%20minor%20Op.27%20No.2%20-Moonlight1.%20Adagio%20sostenuto.mp3">
 </body>
 </html>
